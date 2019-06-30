@@ -2,6 +2,7 @@ import argparse
 import better_exceptions
 from pathlib import Path
 from contextlib import contextmanager
+import urllib.request
 import numpy as np
 import cv2
 import dlib
@@ -18,7 +19,7 @@ from defaults import _C as cfg
 def get_args():
     parser = argparse.ArgumentParser(description="Age estimation demo",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--resume", type=str, required=True,
+    parser.add_argument("--resume", type=str, default=None,
                         help="Model weight to be tested")
     parser.add_argument("--margin", type=float, default=0.4,
                         help="Margin around detected face for age-gender estimation")
@@ -98,6 +99,15 @@ def main():
 
     # load checkpoint
     resume_path = args.resume
+
+    if resume_path is None:
+        resume_path = Path(__file__).resolve().parent.joinpath("misc", "epoch044_0.02343_3.9984.pth")
+
+        if not resume_path.is_file():
+            print(f"=> model path is not set; start downloading trained model to {resume_path}")
+            url = "https://github.com/yu4u/age-estimation-pytorch/releases/download/v1.0/epoch044_0.02343_3.9984.pth"
+            urllib.request.urlretrieve(url, str(resume_path))
+            print("=> download finished")
 
     if Path(resume_path).is_file():
         print("=> loading checkpoint '{}'".format(resume_path))
