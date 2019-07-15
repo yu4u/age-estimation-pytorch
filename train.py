@@ -202,9 +202,6 @@ def main():
         val_writer = SummaryWriter(log_dir=args.tensorboard + "/" + opts_prefix + "_val")
 
     for epoch in range(start_epoch, cfg.TRAIN.EPOCHS):
-        # adjust learning rate
-        scheduler.step()
-
         # train
         train_loss, train_acc = train(train_loader, model, criterion, optimizer, epoch, device)
 
@@ -234,6 +231,9 @@ def main():
             best_val_mae = val_mae
         else:
             print(f"=> [epoch {epoch:03d}] best val mae was not improved from {best_val_mae:.3f} ({val_mae:.3f})")
+
+        # adjust learning rate
+        scheduler.step()
 
     print("=> training finished")
     print(f"additional opts: {args.opts}")
