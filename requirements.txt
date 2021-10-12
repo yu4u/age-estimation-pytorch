@@ -3,7 +3,7 @@ dlib==19.17.0
 future==0.17.1
 imgaug==0.2.9
 numpy==1.16.4
-opencv-python==4.1.0.25
+opencv-python==4.1.1.26
 pandas==0.24.2
 pretrainedmodels==0.7.4
 tensorboard==1.14.0
