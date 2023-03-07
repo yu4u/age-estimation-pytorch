@@ -104,7 +104,7 @@ def main():
         resume_path = Path(__file__).resolve().parent.joinpath("misc", "epoch044_0.02343_3.9984.pth")
 
         if not resume_path.is_file():
-            print(f"=> model path is not set; start downloading trained model to {resume_path}")
+            print("=> model path is not set; start downloading trained model to {resume_path}")
             url = "https://github.com/yu4u/age-estimation-pytorch/releases/download/v1.0/epoch044_0.02343_3.9984.pth"
             urllib.request.urlretrieve(url, str(resume_path))
             print("=> download finished")
